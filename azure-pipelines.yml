@@ -42,5 +42,5 @@ steps:
     azureSubscription: 'Free Trial(949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
     appType: 'webAppLinux'
     WebAppName: 'PortStanleyRun-Api'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     RuntimeStack: 'DOTNETCORE|6.0'
