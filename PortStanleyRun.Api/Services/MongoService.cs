@@ -5,7 +5,7 @@ using System.Security.Authentication;
 
 namespace PortStanleyRun.Api.Services
 {
-    public class CosmosService : ICosmosService
+    public class MongoService : IMongoService
     {
         private readonly MongoClient _client;
         private readonly IConfiguration _config;
@@ -13,7 +13,7 @@ namespace PortStanleyRun.Api.Services
         private IMongoDatabase _portStandleyDb;
         private IMongoCollection<PortStanleyUser> _users;
 
-        public CosmosService(IConfiguration config)
+        public MongoService(IConfiguration config)
 	    {
             _config = config;
 

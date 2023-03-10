@@ -10,9 +10,9 @@ namespace PortStanleyRun.Api.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private ICosmosService _cosmosService;
+        private IMongoService _cosmosService;
 
-        public UserController(ICosmosService cosmosService)
+        public UserController(IMongoService cosmosService)
         {
             _cosmosService = cosmosService;
         }

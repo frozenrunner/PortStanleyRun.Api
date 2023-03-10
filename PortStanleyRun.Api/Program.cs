@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen(sg =>
     sg.EnableAnnotations();
 });
 
-builder.Services.AddScoped<ICosmosService, CosmosService>();
+builder.Services.AddScoped<IMongoService, MongoService>();
 
 var app = builder.Build();
 
