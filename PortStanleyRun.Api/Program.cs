@@ -1,5 +1,7 @@
+using MongoDB.Driver;
 using PortStanleyRun.Api.Services;
 using PortStanleyRun.Api.Services.Interfaces;
+using System.Security.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,17 @@ builder.Services.AddSwaggerGen(sg =>
     sg.EnableAnnotations();
 });
 
-builder.Services.AddScoped<IMongoService, MongoService>();
+builder.Services.AddScoped<IMongoClient>(service => {
+    var mongoSettings = MongoClientSettings.FromUrl(new MongoUrl(string.Format(config.GetConnectionString("MongoDb"), config.GetValue<string>("PrimaryPassword"))));
+    mongoSettings.SslSettings = new SslSettings { EnabledSslProtocols = SslProtocols.Tls12 };
+    mongoSettings.ConnectTimeout = TimeSpan.FromSeconds(60);
+
+    return new MongoClient(mongoSettings);
+});
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRunService, RunService>();
+
 
 var app = builder.Build();
 

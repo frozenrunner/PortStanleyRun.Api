@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
 using PortStanleyRun.Api.Models;
-using PortStanleyRun.Api.Services;
 using PortStanleyRun.Api.Services.Interfaces;
 
 namespace PortStanleyRun.Api.Controllers
@@ -10,17 +8,23 @@ namespace PortStanleyRun.Api.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private IMongoService _cosmosService;
+        private IUserService _userService;
 
-        public UserController(IMongoService cosmosService)
+        public UserController(IUserService mongoService)
         {
-            _cosmosService = cosmosService;
+            _userService = mongoService;
         }
 
-        [HttpPost(Name = "CreateUser")]
-        public async Task CreateUser(PortStanleyUser newUser)
+        [HttpPut]
+        public async Task AddUser(PortStanleyUser newUser)
         {
-            await _cosmosService.AddUser(newUser);
+            await _userService.AddUser(newUser);
+        }
+
+        [HttpGet]
+        public async Task<PortStanleyUser> GetUser(string userName)
+        {
+            return await _userService.GetUser(userName);
         }
     }
 }
