@@ -23,6 +23,6 @@ namespace PortStanleyRun.Api.Models
         /// </summary>
         public DateTime RunDate { get; set; }
 
-        public IEnumerable<ObjectId> Runners { get; set; } = new List<ObjectId>();
+        public List<ObjectId> Runners { get; set; } = new List<ObjectId>();
     }
 }

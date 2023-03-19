@@ -10,7 +10,7 @@ namespace PortStanleyRun.Api.Controllers
     [Route("[controller]")]
     public class RunController : ControllerBase
     {
-        private IRunService _runService;
+        private readonly IRunService _runService;
 
         public RunController(IRunService runService)
         {
@@ -33,6 +33,12 @@ namespace PortStanleyRun.Api.Controllers
         public async Task<List<Models.PortStanleyRun>> GetAllRuns()
         {
             return await _runService.GetAllRuns();
+        }
+
+        [HttpPost("AddRunner")]
+        public async Task AddRunner(string runId, string runnerId)
+        {
+            await _runService.AddRunner(runId, runnerId);
         }
     }
 }

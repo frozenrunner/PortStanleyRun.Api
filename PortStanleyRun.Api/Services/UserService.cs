@@ -9,8 +9,8 @@ namespace PortStanleyRun.Api.Services
         private readonly IMongoClient _client;
         private readonly IConfiguration _config;
 
-        private IMongoDatabase _portStandleyDb;
-        private IMongoCollection<PortStanleyUser> _users;
+        private readonly IMongoDatabase _portStandleyDb;
+        private readonly IMongoCollection<PortStanleyUser> _users;
 
         public UserService(IConfiguration config, IMongoClient client)
 	    {

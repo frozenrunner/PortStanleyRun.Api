@@ -1,8 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using PortStanleyRun.Api.Models;
 using PortStanleyRun.Api.Services.Interfaces;
-using Models = PortStanleyRun.Api.Models;
 
 namespace PortStanleyRun.Api.Services
 {
@@ -11,8 +9,8 @@ namespace PortStanleyRun.Api.Services
         private readonly IMongoClient _client;
         private readonly IConfiguration _config;
 
-        private IMongoDatabase _portStandleyDb;
-        private IMongoCollection<Models.PortStanleyRun> _runs;
+        private readonly IMongoDatabase _portStandleyDb;
+        private readonly IMongoCollection<Models.PortStanleyRun> _runs;
 
         public RunService(IConfiguration config,IMongoClient client)
         {
@@ -38,6 +36,17 @@ namespace PortStanleyRun.Api.Services
         public async Task AddRun(Models.PortStanleyRun run)
         {
             await _runs.InsertOneAsync(run);
+        }
+
+        public async Task<UpdateResult> AddRunner(string runId, string runnerId)
+        {
+            var run = await GetRun(new ObjectId(runId));
+            var runners = run.Runners;
+            runners.Add(new ObjectId(runnerId));
+
+            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, new ObjectId(runId));
+            var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
+            return await _runs.UpdateOneAsync(filter, update);
         }
     }
 }
