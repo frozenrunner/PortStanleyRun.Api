@@ -48,5 +48,14 @@ namespace PortStanleyRun.Api.Services
             var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
             return await _runs.UpdateOneAsync(filter, update);
         }
+
+        public async Task<bool> DeleteRun(ObjectId objectId)
+        {
+            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, objectId);
+
+            var deleteResult = await _runs.DeleteOneAsync(filter);
+
+            return deleteResult.IsAcknowledged ? deleteResult.DeletedCount > 0 : false;
+        }
     }
 }
