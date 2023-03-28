@@ -10,5 +10,6 @@ namespace PortStanleyRun.Api.Services.Interfaces
         Task<List<Models.PortStanleyRun>> GetAllRuns();
         Task AddRun(Models.PortStanleyRun run);
         Task<UpdateResult> AddRunner(string runId, string runnerId);
+        Task<bool> DeleteRun(ObjectId objectId);
     }
 }

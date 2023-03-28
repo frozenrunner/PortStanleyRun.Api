@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
-using PortStanleyRun.Api.Models;
-using PortStanleyRun.Api.Services;
 using PortStanleyRun.Api.Services.Interfaces;
 
 namespace PortStanleyRun.Api.Controllers
@@ -30,6 +28,13 @@ namespace PortStanleyRun.Api.Controllers
         public async Task<Models.PortStanleyRun> GetRun(string objectId)
         {
             return await _runService.GetRun(new ObjectId(objectId));
+        }
+
+        [HttpDelete]
+        [Authorize("delete:runs")]
+        public async Task<bool> DeleteRun(string objectId)
+        {
+            return await _runService.DeleteRun(new ObjectId(objectId));
         }
 
         [HttpGet("GetAllRuns")]
