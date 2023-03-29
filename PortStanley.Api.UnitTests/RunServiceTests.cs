@@ -10,10 +10,11 @@ namespace PortStanley.Api.UnitTests
     {
         private Mock<IRunRepository> _runRepository;
         private IRunService _runService;
-        [SetUp]
-        public void Setup()
+
+        public RunServiceTests()
         {
             _runRepository = new Mock<IRunRepository>();
+            _runService = new RunService(_runRepository.Object);
         }
 
         [Test]
@@ -28,8 +29,6 @@ namespace PortStanley.Api.UnitTests
 
                 }
             });
-
-            _runService = new RunService(_runRepository.Object);
 
             var result = await _runService.GetRun("ACB123");
 
@@ -60,9 +59,6 @@ namespace PortStanley.Api.UnitTests
                     }
                 }
             });
-
-            _runService = new RunService(_runRepository.Object);
-
             var result = await _runService.GetAllRuns();
 
             Assert.That(result, Is.Not.Null);

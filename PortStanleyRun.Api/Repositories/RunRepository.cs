@@ -52,7 +52,8 @@ namespace PortStanleyRun.Api.Repositories
 
             var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
             var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
-            return await _runs.UpdateOneAsync(filter, update);
+            var result = await _runs.UpdateOneAsync(filter, update);
+            return result.IsAcknowledged && result.ModifiedCount > 0;
         }
 
         public async Task<bool> DeleteRun(string runId)
