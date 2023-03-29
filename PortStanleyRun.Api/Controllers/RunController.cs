@@ -25,16 +25,16 @@ namespace PortStanleyRun.Api.Controllers
 
         [HttpGet]
         [Authorize("create:runs")]
-        public async Task<Models.PortStanleyRun> GetRun(string objectId)
+        public async Task<Models.PortStanleyRun> GetRun(string runId)
         {
-            return await _runService.GetRun(new ObjectId(objectId));
+            return await _runService.GetRun(runId);
         }
 
         [HttpDelete]
         [Authorize("delete:runs")]
-        public async Task<bool> DeleteRun(string objectId)
+        public async Task<bool> DeleteRun(string runId)
         {
-            return await _runService.DeleteRun(new ObjectId(objectId));
+            return await _runService.DeleteRun(runId);
         }
 
         [HttpGet("GetAllRuns")]

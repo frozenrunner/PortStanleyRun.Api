@@ -8,10 +8,10 @@ namespace PortStanleyRun.Api.Services.Interfaces
         /// <summary>
         /// Get a Port Stanley Run
         /// </summary>
-        /// <param name="objectId">MongoDb ObjectId for a run</param>
+        /// <param name="runId">MongoDb ObjectId for a run</param>
         /// <returns>A single Port Stanley Run</returns>
-        Task<Models.PortStanleyRun> GetRun(ObjectId objectId);
-
+        Task<Models.PortStanleyRun> GetRun(string runId);
+        
         /// <summary>
         /// Get all Port Stanley Runs
         /// </summary>
