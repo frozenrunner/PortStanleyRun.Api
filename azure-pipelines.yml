@@ -26,10 +26,11 @@ steps:
     publishWebProjects: false
     arguments: --configuration $(buildConfiguration) 
 
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*.UnitTests.csproj'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
