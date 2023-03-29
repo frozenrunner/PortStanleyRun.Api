@@ -44,14 +44,15 @@ namespace PortStanleyRun.Api.Services
             var runners = run.Runners;
             runners.Add(new ObjectId(runnerId));
 
-            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, new ObjectId(runId));
+            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
             var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
             return await _runs.UpdateOneAsync(filter, update);
         }
 
-        public async Task<bool> DeleteRun(ObjectId objectId)
+        public async Task<bool> DeleteRun(string runId)
         {
-            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, objectId);
+            var run = await GetRun(new ObjectId(runId));
+            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
 
             var deleteResult = await _runs.DeleteOneAsync(filter);
 
