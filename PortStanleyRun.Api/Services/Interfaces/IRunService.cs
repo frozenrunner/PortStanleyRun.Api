@@ -28,8 +28,9 @@ namespace PortStanleyRun.Api.Services.Interfaces
         /// </summary>
         /// <param name="runId">ObjectId string for a run</param>
         /// <param name="runnerId">ObjectId string for a runner</param>
+        /// <param name="startingPoint">Starting point for the participant for this run</param>
         /// <returns>true if the runner was added, false otherwise</returns>
-        Task<bool> AddRunner(string runId, string runnerId);
+        Task<bool> AddRunner(string runId, string runnerId, string startingPoint);
 
         /// <summary>
         /// Delete a Port Stanley Run

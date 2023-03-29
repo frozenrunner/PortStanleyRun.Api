@@ -1,5 +1,6 @@
 using MongoDB.Driver;
 using Moq;
+using PortStanleyRun.Api.Models;
 using PortStanleyRun.Api.Repositories.Interfaces;
 using PortStanleyRun.Api.Services;
 using PortStanleyRun.Api.Services.Interfaces;
@@ -24,7 +25,10 @@ namespace PortStanley.Api.UnitTests
             {
                 _id = new MongoDB.Bson.ObjectId("641749070755dd35ac1f6352"),
                 RunDate = DateTime.Now,
-                Runners = new List<MongoDB.Bson.ObjectId>()
+                Runners = new List<RunParticipant>
+                {
+
+                }
             });
 
             var result = await _runService.GetRun("ACB123");
@@ -41,16 +45,21 @@ namespace PortStanley.Api.UnitTests
                 {
                     _id = new MongoDB.Bson.ObjectId("641749070755dd35acff6352"),
                     RunDate = DateTime.Now,
-                    Runners = new List<MongoDB.Bson.ObjectId>()
+                    Runners = new List<RunParticipant>
+                    {
+
+                    }
                 },
                 new PortStanleyRun.Api.Models.PortStanleyRun
                 {
                     _id = new MongoDB.Bson.ObjectId("641749070755dd35ac1f6352"),
                     RunDate = DateTime.Now,
-                    Runners = new List<MongoDB.Bson.ObjectId>()
+                    Runners = new List<RunParticipant>
+                    {
+
+                    }
                 }
             });
-
             var result = await _runService.GetAllRuns();
 
             Assert.That(result, Is.Not.Null);
@@ -60,9 +69,9 @@ namespace PortStanley.Api.UnitTests
         [Test]
         public async Task AddRunner_ReturnsOk()
         {
-            _runRepository.Setup(rr => rr.AddRunner(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+            _runRepository.Setup(rr => rr.AddRunner(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
 
-            var result = await _runService.AddRunner("641749070755dd35acff6352", "641749070755dd35acff6353");
+            var result = await _runService.AddRunner("641749070755dd35acff6352", "641749070755dd35acff6353", "123ABC");
 
             Assert.That(result, Is.True);
         }

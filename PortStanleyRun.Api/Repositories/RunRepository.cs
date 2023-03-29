@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using PortStanleyRun.Api.Models;
 using PortStanleyRun.Api.Repositories.Interfaces;
 using PortStanleyRun.Api.Services.Interfaces;
 
@@ -39,17 +40,20 @@ namespace PortStanleyRun.Api.Repositories
             await _runs.InsertOneAsync(run);
         }
 
-        public async Task<bool> AddRunner(string runId, string runnerId)
+        public async Task<bool> AddRunner(string runId, string runnerId, string startingPoint)
         {
             var run = await GetRun(runId);
             var runners = run.Runners;
-            runners.Add(new ObjectId(runnerId));
+            runners.Add(new RunParticipant
+            {
+                RunnerId = new ObjectId(runnerId),
+                StartingPoint = startingPoint
+            });
 
             var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
             var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
             var result = await _runs.UpdateOneAsync(filter, update);
-
-            return result.IsAcknowledged != false && result.UpsertedId != null;
+            return result.IsAcknowledged && result.ModifiedCount > 0;
         }
 
         public async Task<bool> DeleteRun(string runId)

@@ -49,9 +49,9 @@ namespace PortStanleyRun.Api.Controllers
 
         [HttpPost("AddRunner")]
         [Authorize("create:runs")]
-        public async Task<bool> AddRunner(string runId, string runnerId)
+        public async Task<bool> AddRunner(string runId, string runnerId, string startingPoint)
         {
-            var result = await _runService.AddRunner(runId, runnerId);
+            var result = await _runService.AddRunner(runId, runnerId, startingPoint);
             return result;
         }
     }
