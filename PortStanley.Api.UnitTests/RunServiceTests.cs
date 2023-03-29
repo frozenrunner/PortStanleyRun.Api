@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using Moq;
 using PortStanleyRun.Api.Repositories.Interfaces;
 using PortStanleyRun.Api.Services;
@@ -9,10 +10,11 @@ namespace PortStanley.Api.UnitTests
     {
         private Mock<IRunRepository> _runRepository;
         private IRunService _runService;
-        [SetUp]
-        public void Setup()
+
+        public RunServiceTests()
         {
             _runRepository = new Mock<IRunRepository>();
+            _runService = new RunService(_runRepository.Object);
         }
 
         [Test]
@@ -24,8 +26,6 @@ namespace PortStanley.Api.UnitTests
                 RunDate = DateTime.Now,
                 Runners = new List<MongoDB.Bson.ObjectId>()
             });
-
-            _runService = new RunService(_runRepository.Object);
 
             var result = await _runService.GetRun("ACB123");
 
@@ -51,12 +51,20 @@ namespace PortStanley.Api.UnitTests
                 }
             });
 
-            _runService = new RunService(_runRepository.Object);
-
             var result = await _runService.GetAllRuns();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Has.Count.GreaterThan(1));
+        }
+
+        [Test]
+        public async Task AddRunner_ReturnsOk()
+        {
+            _runRepository.Setup(rr => rr.AddRunner(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+
+            var result = await _runService.AddRunner("641749070755dd35acff6352", "641749070755dd35acff6353");
+
+            Assert.That(result, Is.True);
         }
     }
 }

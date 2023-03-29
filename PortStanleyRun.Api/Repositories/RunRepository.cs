@@ -39,7 +39,7 @@ namespace PortStanleyRun.Api.Repositories
             await _runs.InsertOneAsync(run);
         }
 
-        public async Task<UpdateResult> AddRunner(string runId, string runnerId)
+        public async Task<bool> AddRunner(string runId, string runnerId)
         {
             var run = await GetRun(runId);
             var runners = run.Runners;
@@ -47,7 +47,9 @@ namespace PortStanleyRun.Api.Repositories
 
             var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
             var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
-            return await _runs.UpdateOneAsync(filter, update);
+            var result = await _runs.UpdateOneAsync(filter, update);
+
+            return result.IsAcknowledged != false && result.UpsertedId != null;
         }
 
         public async Task<bool> DeleteRun(string runId)

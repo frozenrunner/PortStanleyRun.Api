@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using PortStanleyRun.Api.Services.Interfaces;
 
 namespace PortStanleyRun.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+#if DEBUG
+    [AllowAnonymous]
+#endif
     public class RunController : ControllerBase
     {
         private readonly IRunService _runService;
@@ -30,12 +34,7 @@ namespace PortStanleyRun.Api.Controllers
         }
 
         [HttpGet("GetAllRuns")]
-#if !DEBUG
         [Authorize("read:runs")]
-#endif
-#if DEBUG
-        [AllowAnonymous]
-#endif
         public async Task<List<Models.PortStanleyRun>> GetAllRuns()
         {
             return await _runService.GetAllRuns();
@@ -50,9 +49,10 @@ namespace PortStanleyRun.Api.Controllers
 
         [HttpPost("AddRunner")]
         [Authorize("create:runs")]
-        public async Task AddRunner(string runId, string runnerId)
+        public async Task<bool> AddRunner(string runId, string runnerId)
         {
-            await _runService.AddRunner(runId, runnerId);
+            var result = await _runService.AddRunner(runId, runnerId);
+            return result;
         }
     }
 }

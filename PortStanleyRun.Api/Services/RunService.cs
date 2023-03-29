@@ -30,9 +30,10 @@ namespace PortStanleyRun.Api.Services
             await _runRepository.AddRun(run);
         }
 
-        public async Task<UpdateResult> AddRunner(string runId, string runnerId)
+        public async Task<bool> AddRunner(string runId, string runnerId)
         {
             var result = await _runRepository.AddRunner(runId, runnerId);
+
             return result;
         }
 
