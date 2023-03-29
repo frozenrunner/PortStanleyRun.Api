@@ -21,9 +21,9 @@ namespace PortStanleyRun.Api.Services
             _runs = _portStandleyDb.GetCollection<Models.PortStanleyRun>(_config.GetValue<string>("Cosmos:RunsContainer"));
         }
 
-        public async Task<Models.PortStanleyRun> GetRun(ObjectId objectId)
+        public async Task<Models.PortStanleyRun> GetRun(string runId)
         {
-            var run = await _runs.FindAsync(x => x._id == objectId);
+            var run = await _runs.FindAsync(x => x._id == new ObjectId(runId));
             return run.FirstOrDefault();
         }
 
@@ -40,7 +40,7 @@ namespace PortStanleyRun.Api.Services
 
         public async Task<UpdateResult> AddRunner(string runId, string runnerId)
         {
-            var run = await GetRun(new ObjectId(runId));
+            var run = await GetRun(runId);
             var runners = run.Runners;
             runners.Add(new ObjectId(runnerId));
 
@@ -51,7 +51,7 @@ namespace PortStanleyRun.Api.Services
 
         public async Task<bool> DeleteRun(string runId)
         {
-            var run = await GetRun(new ObjectId(runId));
+            var run = await GetRun(runId);
             var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
 
             var deleteResult = await _runs.DeleteOneAsync(filter);
