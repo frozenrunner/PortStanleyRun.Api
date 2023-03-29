@@ -11,7 +11,7 @@ namespace PortStanleyRun.Api.Services.Interfaces
         /// <param name="objectId">MongoDb ObjectId for a run</param>
         /// <returns>A single Port Stanley Run</returns>
         Task<Models.PortStanleyRun> GetRun(ObjectId objectId);
-        
+
         /// <summary>
         /// Get all Port Stanley Runs
         /// </summary>
