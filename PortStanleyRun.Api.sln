@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortStanleyRun.Api", "PortStanleyRun.Api\PortStanleyRun.Api.csproj", "{17699D92-DA61-4F23-B5BA-8A54CE297FB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortStanleyRun.Api", "PortStanleyRun.Api\PortStanleyRun.Api.csproj", "{17699D92-DA61-4F23-B5BA-8A54CE297FB3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6293CDA-9F29-4859-873B-CF19DA7080AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortStanleyRun.Api.UnitTests", "PortStanley.Api.UnitTests\PortStanleyRun.Api.UnitTests.csproj", "{91B99867-4C6C-405C-8B04-554D08E6FD1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{17699D92-DA61-4F23-B5BA-8A54CE297FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17699D92-DA61-4F23-B5BA-8A54CE297FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17699D92-DA61-4F23-B5BA-8A54CE297FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91B99867-4C6C-405C-8B04-554D08E6FD1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91B99867-4C6C-405C-8B04-554D08E6FD1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91B99867-4C6C-405C-8B04-554D08E6FD1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91B99867-4C6C-405C-8B04-554D08E6FD1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

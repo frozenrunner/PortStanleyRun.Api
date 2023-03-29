@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using PortStanleyRun.Api.AuthHandlers;
+using PortStanleyRun.Api.Repositories;
+using PortStanleyRun.Api.Repositories.Interfaces;
 using PortStanleyRun.Api.Services;
 using PortStanleyRun.Api.Services.Interfaces;
 using System.Security.Authentication;
@@ -85,6 +87,7 @@ builder.Services.AddScoped<IMongoClient>(service => {
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IRunService, RunService>();
+builder.Services.AddScoped<IRunRepository, RunRepository>();
 
 
 var app = builder.Build();

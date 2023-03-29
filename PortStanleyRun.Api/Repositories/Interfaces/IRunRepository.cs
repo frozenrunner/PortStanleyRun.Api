@@ -1,8 +1,9 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 
-namespace PortStanleyRun.Api.Services.Interfaces
+namespace PortStanleyRun.Api.Repositories.Interfaces
 {
-    public interface IRunService
+    public interface IRunRepository
     {
         /// <summary>
         /// Get a Port Stanley Run
