@@ -11,6 +11,10 @@ namespace PortStanleyRun.Api.Services.Interfaces
         /// <param name="objectId"></param>
         /// <returns></returns>
         Task<Models.PortStanleyRun> GetRun(ObjectId objectId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task<List<Models.PortStanleyRun>> GetAllRuns();
         Task AddRun(Models.PortStanleyRun run);
         Task<UpdateResult> AddRunner(string runId, string runnerId);
