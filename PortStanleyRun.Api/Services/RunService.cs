@@ -1,62 +1,45 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
+using PortStanleyRun.Api.Repositories;
+using PortStanleyRun.Api.Repositories.Interfaces;
 using PortStanleyRun.Api.Services.Interfaces;
 
 namespace PortStanleyRun.Api.Services
 {
     public class RunService : IRunService
     {
-        private readonly IMongoClient _client;
-        private readonly IConfiguration _config;
-
-        private readonly IMongoDatabase _portStandleyDb;
-        private readonly IMongoCollection<Models.PortStanleyRun> _runs;
-
-        public RunService(IConfiguration config,IMongoClient client)
+        private readonly IRunRepository _runRepository;
+        public RunService(IRunRepository runRepository)
         {
-            _config = config;
-            _client = client;
-
-            _portStandleyDb = _client.GetDatabase(_config.GetValue<string>("Cosmos:DatabaseId"));
-            _runs = _portStandleyDb.GetCollection<Models.PortStanleyRun>(_config.GetValue<string>("Cosmos:RunsContainer"));
+            _runRepository = runRepository;
         }
 
         public async Task<Models.PortStanleyRun> GetRun(string runId)
         {
-            var run = await _runs.FindAsync(x => x._id == new ObjectId(runId));
-            return run.FirstOrDefault();
+            var result = await _runRepository.GetRun(runId);
+            return result;
         }
 
         public async Task<List<Models.PortStanleyRun>> GetAllRuns()
         {
-            var runs = await _runs.FindAsync(Builders<Models.PortStanleyRun>.Filter.Empty);
-            return await runs.ToListAsync();
+            var result = await _runRepository.GetAllRuns();
+            return result;
         }
 
         public async Task AddRun(Models.PortStanleyRun run)
         {
-            await _runs.InsertOneAsync(run);
+            await _runRepository.AddRun(run);
         }
 
         public async Task<UpdateResult> AddRunner(string runId, string runnerId)
         {
-            var run = await GetRun(runId);
-            var runners = run.Runners;
-            runners.Add(new ObjectId(runnerId));
-
-            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
-            var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
-            return await _runs.UpdateOneAsync(filter, update);
+            var result = await _runRepository.AddRunner(runId, runnerId);
+            return result;
         }
 
         public async Task<bool> DeleteRun(string runId)
         {
-            var run = await GetRun(runId);
-            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
-
-            var deleteResult = await _runs.DeleteOneAsync(filter);
-
-            return deleteResult.IsAcknowledged ? deleteResult.DeletedCount > 0 : false;
+            var result = await _runRepository.DeleteRun(runId);
+            return result;
         }
     }
 }
