@@ -30,7 +30,7 @@ namespace PortStanleyRun.Api.Repositories.Interfaces
         /// <param name="runId">ObjectId string for a run</param>
         /// <param name="runnerId">ObjectId string for a runner</param>
         /// <returns>Result of the update</returns>
-        Task<UpdateResult> AddRunner(string runId, string runnerId);
+        Task<bool> AddRunner(string runId, string runnerId);
 
         /// <summary>
         /// Delete a Port Stanley Run
