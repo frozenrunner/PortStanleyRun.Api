@@ -14,6 +14,7 @@ variables:
   projects: '**/*.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  artifactName: 'API'
 
 stages:
   - stage: BuildTest
@@ -50,6 +51,11 @@ stages:
           publishWebProjects: true
           projects: $(projects)
           arguments: "--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)"
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: '${{ variables.artifactName }}'
+          publishLocation: 'Container'
 
   - stage: DeployDev
     displayName: "Deploy to Dev"
@@ -57,6 +63,8 @@ stages:
     jobs:
     - job:
       steps:
+      - download: current
+        artifact: ${{ variables.artifactName }}
       - task: AzureRmWebAppDeployment@4
         inputs:
           ConnectionType: 'AzureRM'
