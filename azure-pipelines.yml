@@ -84,7 +84,8 @@ stages:
     displayName: "Deploy to Prod"
     dependsOn: DeployDev
     jobs:
-    - job:
+    - job: ManualValidation
+      displayName: "Manual Validation"
       steps:
       - task: ManualValidation@0
         timeoutInMinutes: 1440
@@ -92,6 +93,7 @@ stages:
           notifyUsers: 'mike.horlick@gmail.com'
           instructions: 'Deploy to prod request'
     - job:
+      displayName: "Deploy"
       steps:
       - task: DownloadPipelineArtifact@2
         inputs:
