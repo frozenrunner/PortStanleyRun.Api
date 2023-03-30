@@ -25,7 +25,7 @@ namespace PortStanleyRun.Api.Repositories
 
         public async Task<Models.PortStanleyRun> GetRun(string runId)
         {
-            var run = await _runs.FindAsync(x => x._id == new ObjectId(runId));
+            var run = await _runs.FindAsync(x => x.Id == new ObjectId(runId));
             return run.FirstOrDefault();
         }
 
@@ -50,7 +50,7 @@ namespace PortStanleyRun.Api.Repositories
                 StartingPoint = startingPoint
             });
 
-            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
+            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r.Id, run.Id);
             var update = Builders<Models.PortStanleyRun>.Update.Set(r => r.Runners, run.Runners);
             var result = await _runs.UpdateOneAsync(filter, update);
             return result.IsAcknowledged && result.ModifiedCount > 0;
@@ -59,7 +59,7 @@ namespace PortStanleyRun.Api.Repositories
         public async Task<bool> DeleteRun(string runId)
         {
             var run = await GetRun(runId);
-            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r._id, run._id);
+            var filter = Builders<Models.PortStanleyRun>.Filter.Eq(r => r.Id, run.Id);
 
             var deleteResult = await _runs.DeleteOneAsync(filter);
 
