@@ -19,7 +19,7 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: DotNetCoreCLI@2
-  displayName: "dotnet build"
+  displayName: "Build"
   inputs:
     command: build
     projects: $(projects)
@@ -27,11 +27,13 @@ steps:
     arguments: --configuration $(buildConfiguration) 
 
 - task: DotNetCoreCLI@2
+  displayName: "Unit Tests"
   inputs:
     command: 'test'
     projects: '**/*.UnitTests.csproj'
 
 - task: DotNetCoreCLI@2
+  displayName: "Publish"
   inputs:
     command: 'publish'
     publishWebProjects: true
@@ -43,6 +45,6 @@ steps:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Free Trial(949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
     appType: 'webAppLinux'
-    WebAppName: 'PortStanleyRun-Api'
+    WebAppName: 'PortStanleyRun-Api-Dev'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     RuntimeStack: 'DOTNETCORE|6.0'
