@@ -39,6 +39,7 @@ stages:
 
   - stage: Publish
     displayName: "Publish release"
+    dependsOn: BuildTest
     jobs:
     - job:
       steps:
@@ -52,6 +53,7 @@ stages:
 
   - stage: DeployDev
     displayName: "Deploy to Dev"
+    dependsOn: Publish
     jobs:
     - job:
       steps:
