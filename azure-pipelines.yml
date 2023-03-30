@@ -15,36 +15,51 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
-- task: NuGetToolInstaller@1
+stages:
+  - stage: BuildTest
+    displayName: "Build and test"
+    jobs:
+    - job:
+      steps:
+      - task: NuGetToolInstaller@1
 
-- task: DotNetCoreCLI@2
-  displayName: "Build"
-  inputs:
-    command: build
-    projects: $(projects)
-    publishWebProjects: false
-    arguments: --configuration $(buildConfiguration) 
+      - task: DotNetCoreCLI@2
+        displayName: "Build"
+        inputs:
+          command: build
+          projects: $(projects)
+          publishWebProjects: false
+          arguments: --configuration $(buildConfiguration) 
 
-- task: DotNetCoreCLI@2
-  displayName: "Unit Tests"
-  inputs:
-    command: 'test'
-    projects: '**/*.UnitTests.csproj'
+      - task: DotNetCoreCLI@2
+        displayName: "Unit Tests"
+        inputs:
+          command: 'test'
+          projects: '**/*.UnitTests.csproj'
 
-- task: DotNetCoreCLI@2
-  displayName: "Publish"
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    projects: $(projects)
-    arguments: "--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)"
+  - stage: Publish
+    displayName: "Publish release"
+    jobs:
+    - job:
+      steps:
+      - task: DotNetCoreCLI@2
+        displayName: "Publish"
+        inputs:
+          command: 'publish'
+          publishWebProjects: true
+          projects: $(projects)
+          arguments: "--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)"
 
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Free Trial(949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
-    appType: 'webAppLinux'
-    WebAppName: 'PortStanleyRun-Api-Dev'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    RuntimeStack: 'DOTNETCORE|6.0'
+  - stage: DeployDev
+    displayName: "Deploy to Dev"
+    jobs:
+    - job:
+      steps:
+      - task: AzureRmWebAppDeployment@4
+        inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Free Trial(949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
+          appType: 'webAppLinux'
+          WebAppName: 'PortStanleyRun-Api-Dev'
+          packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+          RuntimeStack: 'DOTNETCORE|6.0'
