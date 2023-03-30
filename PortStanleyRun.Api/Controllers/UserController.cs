@@ -7,6 +7,9 @@ namespace PortStanleyRun.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+#if DEBUG
+    [AllowAnonymous]
+#endif
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

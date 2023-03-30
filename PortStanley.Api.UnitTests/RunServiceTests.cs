@@ -23,7 +23,7 @@ namespace PortStanley.Api.UnitTests
         {
             _runRepository.Setup(rr => rr.GetRun(It.IsAny<string>())).ReturnsAsync(new PortStanleyRun.Api.Models.PortStanleyRun
             {
-                _id = new MongoDB.Bson.ObjectId("641749070755dd35ac1f6352"),
+                Id = new MongoDB.Bson.ObjectId("641749070755dd35ac1f6352"),
                 RunDate = DateTime.Now,
                 Runners = new List<RunParticipant>
                 {
@@ -43,7 +43,7 @@ namespace PortStanley.Api.UnitTests
             {
                 new PortStanleyRun.Api.Models.PortStanleyRun
                 {
-                    _id = new MongoDB.Bson.ObjectId("641749070755dd35acff6352"),
+                    Id = new MongoDB.Bson.ObjectId("641749070755dd35acff6352"),
                     RunDate = DateTime.Now,
                     Runners = new List<RunParticipant>
                     {
@@ -52,7 +52,7 @@ namespace PortStanley.Api.UnitTests
                 },
                 new PortStanleyRun.Api.Models.PortStanleyRun
                 {
-                    _id = new MongoDB.Bson.ObjectId("641749070755dd35ac1f6352"),
+                    Id = new MongoDB.Bson.ObjectId("641749070755dd35ac1f6352"),
                     RunDate = DateTime.Now,
                     Runners = new List<RunParticipant>
                     {

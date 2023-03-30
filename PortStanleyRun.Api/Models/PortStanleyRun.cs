@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace PortStanleyRun.Api.Models
 {
@@ -10,11 +9,14 @@ namespace PortStanleyRun.Api.Models
         /// MongoDB id for document
         /// </summary>
         [BsonId]
-        public ObjectId _id { get; set; } = ObjectId.GenerateNewId();
+        public ObjectId Id { get; set; } = ObjectId.GenerateNewId();
 
+        /// <summary>
+        /// String representation of a MongoDb BsonId
+        /// </summary>
         public string ObjectIdString { get
             {
-                return _id.ToString();
+                return Id.ToString();
             } 
         }
 
@@ -23,6 +25,9 @@ namespace PortStanleyRun.Api.Models
         /// </summary>
         public DateTime RunDate { get; set; }
 
+        /// <summary>
+        /// List of participants for a run
+        /// </summary>
         public List<RunParticipant> Runners { get; set; } = new List<RunParticipant>();
     }
 }
