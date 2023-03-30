@@ -91,6 +91,8 @@ stages:
         inputs:
           notifyUsers: 'mike.horlick@gmail.com'
           instructions: 'Deploy to prod request'
+    - job:
+      steps:
       - task: DownloadPipelineArtifact@2
         inputs:
           buildType: 'current'
