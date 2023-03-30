@@ -63,8 +63,11 @@ stages:
     jobs:
     - job:
       steps:
-      - download: current
-        artifact: ${{ variables.artifactName }}
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: '${{ variables.artifactName }}'
+          targetPath: '$(Build.ArtifactStagingDirectory)'
       - task: AzureRmWebAppDeployment@4
         inputs:
           ConnectionType: 'AzureRM'
