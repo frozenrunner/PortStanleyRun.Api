@@ -79,3 +79,31 @@ stages:
           SlotName: 'production'
           packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
           RuntimeStack: 'DOTNETCORE|6.0'
+
+  - stage: DeployProd
+    displayName: "Deploy to Prod"
+    dependsOn: DeployDev
+    jobs:
+    - job:
+      steps:
+      - task: ManualValidation@0
+        timeoutInMinutes: 1440
+        inputs:
+          notifyUsers: 'mike.horlick@gmail.com'
+          instructions: 'Deploy to prod request'
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: '${{ variables.artifactName }}'
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+      - task: AzureRmWebAppDeployment@4
+        inputs:
+          ConnectionType: 'AzureRM'
+          azureSubscription: 'Free Trial(949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
+          appType: 'webAppLinux'
+          WebAppName: 'PortStanleyRun-Api'
+          deployToSlotOrASE: true
+          ResourceGroupName: 'rg-main'
+          SlotName: 'production'
+          packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+          RuntimeStack: 'DOTNETCORE|6.0'
