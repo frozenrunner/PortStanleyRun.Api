@@ -31,16 +31,19 @@ namespace PortStanleyRun.Api.Models
         /// <summary>
         /// Email
         /// </summary>
+        [BsonElement("email")]
         public string Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Expected pace
         /// </summary>
+        [BsonElement("pace")]
         public string Pace { get; set; } = string.Empty;
 
         /// <summary>
         /// Runs that the user has been or plans to be part of
         /// </summary>
+        [BsonElement("run")]
         public IEnumerable<ObjectId> Runs { get; set; } = new List<ObjectId>();
     }
 }

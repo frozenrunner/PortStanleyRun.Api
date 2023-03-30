@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using PortStanleyRun.Api.Services.Interfaces;
 
 namespace PortStanleyRun.Api.Controllers
@@ -8,7 +7,7 @@ namespace PortStanleyRun.Api.Controllers
     [ApiController]
     [Route("[controller]")]
 #if DEBUG
-    [AllowAnonymous]
+    
 #endif
     public class RunController : ControllerBase
     {
