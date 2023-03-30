@@ -3,6 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace PortStanleyRun.Api.Models
 {
+    [BsonIgnoreExtraElements]
     public class PortStanleyRun
     {
         /// <summary>
@@ -23,11 +24,13 @@ namespace PortStanleyRun.Api.Models
         /// <summary>
         /// Date of a run
         /// </summary>
+        [BsonElement("runDate")]
         public DateTime RunDate { get; set; }
 
         /// <summary>
         /// List of participants for a run
         /// </summary>
+        [BsonElement("runners")]
         public List<RunParticipant> Runners { get; set; } = new List<RunParticipant>();
     }
 }

@@ -9,8 +9,8 @@ namespace PortStanley.Api.UnitTests
 {
     public class RunServiceTests
     {
-        private Mock<IRunRepository> _runRepository;
-        private IRunService _runService;
+        private readonly Mock<IRunRepository> _runRepository;
+        private readonly IRunService _runService;
 
         public RunServiceTests()
         {
