@@ -86,6 +86,7 @@ stages:
     jobs:
     - job: ManualValidation
       displayName: "Manual Validation"
+      pool: server
       steps:
       - task: ManualValidation@0
         timeoutInMinutes: 1440
