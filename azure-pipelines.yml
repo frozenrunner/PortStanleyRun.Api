@@ -79,6 +79,11 @@ stages:
           SlotName: 'production'
           packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
           RuntimeStack: 'DOTNETCORE|6.0'
+      - task: DotNetCoreCLI@2
+        displayName: "Unit Tests"
+        inputs:
+          command: 'test'
+          projects: '**/*.IntegrationTests.csproj'
 
   - stage: DeployProd
     displayName: "Deploy to Prod"
