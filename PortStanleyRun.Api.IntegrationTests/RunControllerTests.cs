@@ -45,7 +45,6 @@ namespace PortStanleyRun.Api.IntegrationTests
             var token = await GetAccessToken();
 
             var request = new HttpRequestMessage(HttpMethod.Get, $"{auth0Settings[""]}Run/GetAllRuns");
-
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             //Act
