@@ -71,7 +71,7 @@ stages:
       - task: AzureRmWebAppDeployment@4
         inputs:
           ConnectionType: 'AzureRM'
-          azureSubscription: 'Free Trial(949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
+          azureSubscription: 'AzureSubscription (949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
           appType: 'webAppLinux'
           WebAppName: 'PortStanleyRun-Api-Dev'
           deployToSlotOrASE: true
@@ -109,7 +109,7 @@ stages:
       - task: AzureRmWebAppDeployment@4
         inputs:
           ConnectionType: 'AzureRM'
-          azureSubscription: 'Free Trial(949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
+          azureSubscription: 'AzureSubscription (949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
           appType: 'webAppLinux'
           WebAppName: 'PortStanleyRun-Api'
           deployToSlotOrASE: true
