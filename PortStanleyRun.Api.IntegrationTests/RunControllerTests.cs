@@ -1,3 +1,4 @@
+using Amazon.Runtime.Internal;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 using Microsoft.Extensions.Configuration;
@@ -37,9 +38,6 @@ namespace PortStanleyRun.Api.IntegrationTests
                 ClientSecret = config["api-clientsecret"]
             };
 
-            Console.WriteLine($"{auth0Settings["ClientId"]}");
-            Console.WriteLine($"{auth0Settings["Audience"]}");
-            Console.WriteLine($"{config["api-clientsecret"]}");
             var tokenResponse = await auth0Client.GetTokenAsync(tokenRequest);
 
 
@@ -57,8 +55,12 @@ namespace PortStanleyRun.Api.IntegrationTests
 
             //Act
             var response = await httpClient.SendAsync(request);
-
+            try { 
             response.EnsureSuccessStatusCode();
+            } catch (HttpRequestException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             var stringResponse = await response.Content.ReadAsStringAsync();
             
             var terms = BsonSerializer.Deserialize<List<Models.PortStanleyRun>>(stringResponse);
