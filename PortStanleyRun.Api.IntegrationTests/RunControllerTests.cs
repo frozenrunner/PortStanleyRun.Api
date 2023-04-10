@@ -9,6 +9,7 @@ namespace PortStanleyRun.Api.IntegrationTests
     {
         private PortStanleyApiFactory _application;
         private readonly HttpClient httpClient;
+        private readonly IConfigurationRoot config;
         private readonly IConfigurationSection auth0Settings;
 
         public RunControllerTests()
@@ -16,12 +17,13 @@ namespace PortStanleyRun.Api.IntegrationTests
             _application = new PortStanleyApiFactory();
             httpClient = _application.CreateClient();
 
-            auth0Settings = new ConfigurationBuilder()
+            config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.test.json")
                 .AddUserSecrets<RunControllerTests>()
-                .Build()
-                .GetSection("Auth0");
+                .Build();
+
+            auth0Settings = config.GetSection("Auth0");
         }
 
         async Task<string> GetAccessToken()
@@ -30,7 +32,7 @@ namespace PortStanleyRun.Api.IntegrationTests
             var tokenRequest = new ClientCredentialsTokenRequest()
             {
                 ClientId = auth0Settings["ClientId"],
-                ClientSecret = auth0Settings["ClientSecret"],
+                ClientSecret = config["api-clientsecret"],
                 Audience = auth0Settings["Audience"]
             };
             var tokenResponse = await auth0Client.GetTokenAsync(tokenRequest);
