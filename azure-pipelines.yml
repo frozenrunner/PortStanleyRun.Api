@@ -63,6 +63,7 @@ stages:
     condition: succeeded()
     variables:
       - group: "kv-development"
+      - group: "development"
     jobs:
     - job:
       steps:
