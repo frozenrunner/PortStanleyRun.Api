@@ -2,6 +2,7 @@ using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson.Serialization;
+using System.Diagnostics;
 
 namespace PortStanleyRun.Api.IntegrationTests
 {
@@ -32,10 +33,15 @@ namespace PortStanleyRun.Api.IntegrationTests
             var tokenRequest = new ClientCredentialsTokenRequest()
             {
                 ClientId = auth0Settings["ClientId"],
-                ClientSecret = config["api-clientsecret"],
-                Audience = auth0Settings["Audience"]
+                Audience = auth0Settings["Audience"],
+                ClientSecret = config["api-clientsecret"]
             };
+
+            Debug.WriteLine($"{auth0Settings["ClientId"]}");
+            Debug.WriteLine($"{auth0Settings["Audience"]}");
+            Debug.WriteLine($"{config["api-clientsecret"]}");
             var tokenResponse = await auth0Client.GetTokenAsync(tokenRequest);
+
 
             return tokenResponse.AccessToken;
         }
