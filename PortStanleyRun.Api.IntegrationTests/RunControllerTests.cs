@@ -37,9 +37,9 @@ namespace PortStanleyRun.Api.IntegrationTests
                 ClientSecret = config["api-clientsecret"]
             };
 
-            Debug.WriteLine($"{auth0Settings["ClientId"]}");
-            Debug.WriteLine($"{auth0Settings["Audience"]}");
-            Debug.WriteLine($"{config["api-clientsecret"]}");
+            Console.WriteLine($"{auth0Settings["ClientId"]}");
+            Console.WriteLine($"{auth0Settings["Audience"]}");
+            Console.WriteLine($"{config["api-clientsecret"]}");
             var tokenResponse = await auth0Client.GetTokenAsync(tokenRequest);
 
 
