@@ -59,6 +59,8 @@ namespace PortStanleyRun.Api.IntegrationTests
             response.EnsureSuccessStatusCode();
             } catch (HttpRequestException ex)
             {
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(content.ToString());
                 Console.WriteLine(ex.ToString());
             }
             var stringResponse = await response.Content.ReadAsStringAsync();
