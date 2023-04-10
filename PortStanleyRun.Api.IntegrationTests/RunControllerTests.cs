@@ -52,7 +52,7 @@ namespace PortStanleyRun.Api.IntegrationTests
             //Arrange
             var token = await GetAccessToken();
 
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{auth0Settings[""]}Run/GetAllRuns");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{config["Urls:Api"]}Run/GetAllRuns");
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             //Act
