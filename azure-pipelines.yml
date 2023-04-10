@@ -60,6 +60,9 @@ stages:
   - stage: DeployDev
     displayName: "Deploy to Dev"
     dependsOn: Publish
+    condition: succeeded()
+    variables:
+      - group: "kv-development"
     jobs:
     - job:
       steps:
@@ -79,14 +82,9 @@ stages:
           SlotName: 'production'
           packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
           RuntimeStack: 'DOTNETCORE|6.0'
-      - task: AzureKeyVault@2
-        inputs:
-          azureSubscription: 'AzureSubscription (949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
-          KeyVaultName: 'kv-portstanley-d'
-          SecretsFilter: '*'
-          RunAsPreJob: false
       - task: FileTransform@1
         inputs:
+          folderPath: '$(System.DefaultWorkingDirectory)/**/*'
           fileType: 'json'
           targetFiles: '**/appsettings.test.json'
       - task: DotNetCoreCLI@2
