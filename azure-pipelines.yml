@@ -79,8 +79,14 @@ stages:
           SlotName: 'production'
           packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
           RuntimeStack: 'DOTNETCORE|6.0'
+      - task: AzureKeyVault@2
+        inputs:
+          azureSubscription: 'AzureSubscription (949d7eee-adc3-4aaa-bedf-54d3174d11ec)'
+          KeyVaultName: 'kv-portstanley-d'
+          SecretsFilter: '*'
+          RunAsPreJob: false
       - task: DotNetCoreCLI@2
-        displayName: "Unit Tests"
+        displayName: "Integration Tests"
         inputs:
           command: 'test'
           projects: '**/*.IntegrationTests.csproj'
