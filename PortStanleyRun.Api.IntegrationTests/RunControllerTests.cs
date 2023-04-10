@@ -1,23 +1,28 @@
-using Amazon.Runtime.Internal;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson.Serialization;
-using System.Diagnostics;
 
 namespace PortStanleyRun.Api.IntegrationTests
 {
     public class RunControllerTests
     {
+#if DEBUG
         private PortStanleyApiFactory _application;
+#endif
         private readonly HttpClient httpClient;
         private readonly IConfigurationRoot config;
         private readonly IConfigurationSection auth0Settings;
 
         public RunControllerTests()
         {
+
+#if DEBUG
             _application = new PortStanleyApiFactory();
             httpClient = _application.CreateClient();
+#else
+            httpClient = new HttpClient();
+#endif
 
             config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -55,14 +60,8 @@ namespace PortStanleyRun.Api.IntegrationTests
 
             //Act
             var response = await httpClient.SendAsync(request);
-            try { 
             response.EnsureSuccessStatusCode();
-            } catch (HttpRequestException ex)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(content.ToString());
-                Console.WriteLine(ex.ToString());
-            }
+
             var stringResponse = await response.Content.ReadAsStringAsync();
             
             var terms = BsonSerializer.Deserialize<List<Models.PortStanleyRun>>(stringResponse);
