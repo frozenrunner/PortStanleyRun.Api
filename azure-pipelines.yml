@@ -87,6 +87,8 @@ stages:
           RunAsPreJob: false
       - task: DotNetCoreCLI@2
         displayName: "Integration Tests"
+        env:
+          api-clientsecret: $(api-clientsecret)
         inputs:
           command: 'test'
           projects: '**/*.IntegrationTests.csproj'
