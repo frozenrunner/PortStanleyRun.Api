@@ -87,7 +87,6 @@ stages:
           RunAsPreJob: false
       - task: FileTransform@1
         inputs:
-          folderPath: '$(System.DefaultWorkingDirectory)/**/*.zip'
           fileType: 'json'
           targetFiles: '**/appsettings.test.json'
       - task: DotNetCoreCLI@2
